@@ -15,7 +15,10 @@
     const previous = active;
     active = id;
     if (id) window.SANHEMedia?.warmFounder(id);
-    if (previous && previous !== id) panels.get(previous).dispatchEvent(new Event('founder-close'));
+    if (previous && previous !== id) {
+      panels.get(previous).dispatchEvent(new Event('founder-close'));
+      window.SANHEMedia?.releaseFounder(previous);
+    }
     panels.forEach((panel, key) => {
       panel.hidden = key !== id;
       if (panel.hidden) panel.querySelectorAll('video').forEach(video => video.pause());

@@ -28,12 +28,19 @@
     if (!intentOnly) section.querySelectorAll('img[data-src]').forEach(prepareImage);
     if (id === 'jiajia') loadModule('./jiajia-panel.js?v=20261101-performance');
   }
+  function releaseFounder(id) {
+    document.getElementById(id)?.querySelectorAll('video').forEach(video=>{
+      video.pause();
+      video.preload = 'none';
+      if (video.hasAttribute('src')) {video.removeAttribute('src');video.load();}
+    });
+  }
   const modules = new Map();
   function loadModule(url) {
     if (!modules.has(url)) modules.set(url, import(url).catch(error=>{modules.delete(url);console.error('Chapter could not load:',error)}));
     return modules.get(url);
   }
-  window.SANHEMedia = {prepareVideo,prepareImage,warmFounder,lightMedia};
+  window.SANHEMedia = {prepareVideo,prepareImage,warmFounder,releaseFounder,lightMedia};
   // Warm only the next film when the visitor signals an intent to open it.
   document.querySelectorAll('[data-founder]').forEach(button => {
     button.addEventListener('pointerenter', () => warmFounder(button.dataset.founder,true), {once:true});
