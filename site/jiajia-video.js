@@ -40,6 +40,7 @@
     resetFrame = requestAnimationFrame(() => requestAnimationFrame(() => section.classList.remove('is-resetting')));
   }
   function play() {
+    window.SANHEMedia?.prepareVideo(video);
     video.play().then(() => {
       if (!visible || document.hidden || handedOff) video.pause();
     }).catch(error => {

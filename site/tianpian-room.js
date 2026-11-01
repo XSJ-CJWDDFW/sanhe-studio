@@ -10,7 +10,7 @@
   const shell = document.getElementById('tp-detail-shell');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const W = 1920, H = 1080;
-  const img = (name, alt = '') => `<img src="${root}${name}" alt="${alt}" loading="lazy" draggable="false">`;
+  const img = (name, alt = '') => `<img src="${name==='room-v4.png'?'assets/performance/tianpian-room-v1.webp':root+name}" alt="${alt}" loading="lazy" decoding="async" draggable="false">`;
   const visual = (name, className = '', alt = '') => `<div class="tp-slide-visual ${className}">${img(name, alt)}</div>`;
   const words = (eyebrow, title, line = '', extra = '') => `<div class="tp-slide-words"><span class="tp-eyebrow">${eyebrow}</span><h2>${title}</h2>${line ? `<p>${line}</p>` : ''}${extra}</div>`;
   const slide = (a, b, className = '') => `<article class="tp-slide ${className}">${a}${b}</article>`;

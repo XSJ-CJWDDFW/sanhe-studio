@@ -108,6 +108,7 @@ function stopFull() {
 }
 function seekReel(seconds, {play = true, unmute = false} = {}) {
   clearTimeout(guideTimer);
+  window.SANHEMedia?.prepareVideo(fullVideo);
   const duration = Number.isFinite(fullVideo.duration) ? fullVideo.duration : totalReel;
   const targetTime = clamp(seconds, 0, Math.max(0, duration - .01));
   pendingSeek = targetTime;
@@ -138,7 +139,7 @@ function buildTools() {
     card.style.setProperty('--fan-index',index);
     card.setAttribute('role','img');
     card.setAttribute('aria-label',tool.name);
-    card.innerHTML = `<img class="rr-tool-body" src="${ASSET}tool_token.png" alt=""><img class="rr-tool-brand" src="${ASSET}icons/${tool.icon}" alt=""><span>${tool.short}</span>`;
+    card.innerHTML = `<img class="rr-tool-body" data-src="assets/performance/tool-token-v1.webp" alt=""><img class="rr-tool-brand" data-src="${ASSET}icons/${tool.icon}" alt=""><span>${tool.short}</span>`;
     toolsBox.appendChild(card);
   });
 }
@@ -251,6 +252,7 @@ function setProgress(p) {
 function startOpening() {
   if (openingStarted) return;
   openingStarted = true;
+  window.SANHEMedia?.prepareVideo(scrub);
   if (reduced) {
     openingComplete = true;
     render(0);
@@ -269,6 +271,7 @@ function startOpening() {
 function startTransition() {
   if (!openingStarted || transitionStarted) return;
   transitionStarted = true;
+  window.SANHEMedia?.prepareVideo(transition);
   transition.classList.add('is-active');
   try { transition.currentTime = 0; } catch {}
   transition.play().catch(() => finishTransition());
@@ -470,7 +473,6 @@ async function init() {
   buildTimeline();
   addWaveform();
   setupPlayheadDrag();
-  fullVideo.src = `${ASSET}reel/ranran_reel_full.mp4`;
   fullVideo.muted = true;
   fullVideo.addEventListener('loadedmetadata', () => {
     if (pendingSeek !== null) {
@@ -488,6 +490,7 @@ async function init() {
     playButton.setAttribute('aria-label','重新加载混剪合辑');
   });
   toolboxTrigger.addEventListener('click',()=>{
+    toolsBox.querySelectorAll('img[data-src]').forEach(image=>window.SANHEMedia?.prepareImage(image));
     const expanded = toolboxTrigger.getAttribute('aria-expanded')==='true';
     toolboxTrigger.setAttribute('aria-expanded',String(!expanded));
     toolboxTrigger.setAttribute('aria-label',expanded?'打开然然的剪辑工具箱':'收起然然的剪辑工具箱');
@@ -508,8 +511,12 @@ async function init() {
   playFullButton.addEventListener('click',()=>seekReel(0,{unmute:true}));
   cat.addEventListener('click',()=>{cat.classList.remove('is-hop');void cat.offsetWidth;cat.classList.add('is-hop');dispatchEvent(new CustomEvent('cat-found',{detail:{id:'cat-ranran'}}))});
   scrub.addEventListener('error',startTransition);
+  scrub.addEventListener('timeupdate',()=>{
+    if (scrub.currentTime>1.5 && !transitionStarted) window.SANHEMedia?.prepareVideo(transition);
+  });
   scrub.addEventListener('ended',startTransition);
   transition.addEventListener('timeupdate',()=>render(latestRawP));
+  transition.addEventListener('playing',()=>window.SANHEMedia?.prepareVideo(fullVideo,'metadata'));
   transition.addEventListener('error',finishTransition);
   transition.addEventListener('ended',finishTransition);
   document.getElementById('rr-guide-open').addEventListener('click', () => {

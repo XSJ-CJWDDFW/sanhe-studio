@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>叁合 SANHE · 各有所见，合有所成。</title>
+  <link rel="preload" as="image" href="assets/performance/intro-start-v1.webp" fetchpriority="high">
   <style>
     :root{--paper:#fff;--ink:#282623;--muted:#827970;--wood:#684735;--rule:#e9e4df}
     *{box-sizing:border-box}
@@ -79,18 +80,15 @@
     }
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.media video,.media img,.media::after,.hero.is-welcome .headline,.hero.is-welcome .headline h1,.hero.is-welcome .headline p,.dark-curtain,.ranran,.tianpian-flash{transition:none}.tianpian-flash.is-developing img{animation:none}}
   </style>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="ranran-editor.css?v=20261101-full-reel">
+<link rel="stylesheet" href="ranran-editor.css?v=20261101-performance">
   <link rel="stylesheet" href="tianpian-room.css?v=20261030k">
   <link rel="stylesheet" href="project-carousel.css?v=20261101-bounce">
   <link rel="stylesheet" href="studio-background.css?v=20261101-transparent">
-  <link rel="stylesheet" href="founder-navigation.css?v=20261101-icons">
+  <link rel="stylesheet" href="founder-navigation.css?v=20261101-performance">
   <link rel="stylesheet" href="jiajia-panel.css?v=20261101-proof">
   <link rel="stylesheet" href="chapter-layout.css?v=20261101-small-marks">
-  <link rel="stylesheet" href="easter-egg.css?v=20261101-contact-shadow">
-  <link rel="stylesheet" href="cooperation.css?v=20261101-avatar-fix">
+  <link rel="stylesheet" href="easter-egg.css?v=20261101-performance">
+  <link rel="stylesheet" href="cooperation.css?v=20261101-performance">
 </head>
 <body>
   <header class="topbar">
@@ -104,32 +102,30 @@
           <p>各有所见，合有所成。</p>
         </div>
         <div class="media">
-          <img src="end.png" alt="然然、佳佳和甜片在长木桌后迎接访客，佳佳左臂抱猫、右手伸出。" width="1920" height="1080">
-          <video id="intro" muted playsinline preload="auto" poster="start.png" width="1920" height="1080" aria-label="三位主理人从聊天中回过神来，迎接访客">
-            <source src="sanhe-intro-web.mp4" type="video/mp4">
-          </video>
+          <img id="intro-end" data-src="assets/performance/intro-end-v1.webp" alt="然然、佳佳和甜片在长木桌后迎接访客，佳佳左臂抱猫、右手伸出。" width="1920" height="1080">
+          <video id="intro" muted playsinline preload="none" poster="assets/performance/intro-start-v1.webp" width="1920" height="1080" aria-label="三位主理人从聊天中回过神来，迎接访客" data-src-desktop="assets/performance/intro-desktop-v1.mp4" data-src-mobile="assets/performance/intro-mobile-v1.mp4"></video>
         </div>
       </div>
     </section>
     <section class="about-chapter" id="founders" aria-label="关于我们：选择一位主理人">
     <div class="about-us about-banner" id="about-us" aria-label="关于我们：三位主理人与四只猫">
-      <img src="assets/founders/about-us-transparent-v2.png" alt="然然坐在关字下，身旁依偎两只黑白猫；佳佳坐在于字上，与橘猫作伴；甜片靠着们字，怀抱灰白长毛猫。" width="1983" height="793" loading="lazy">
+      <img src="assets/performance/about-us-v1.webp" alt="然然坐在关字下，身旁依偎两只黑白猫；佳佳坐在于字上，与橘猫作伴；甜片靠着们字，怀抱灰白长毛猫。" width="1983" height="793" loading="lazy">
     </div>
     <nav class="founder-navigation" aria-label="选择主理人，展开过往履历">
       <button class="founder-button" type="button" data-founder="tianpian" aria-controls="tianpian" aria-expanded="false" aria-describedby="founder-tip-tianpian">
-        <span class="founder-face founder-face--tianpian"><img src="assets/tianpian/room/room-v4.png" alt="" width="1920" height="1080" draggable="false"></span>
+        <span class="founder-face founder-face--tianpian"><img src="assets/performance/avatar-tianpian-v1.webp" width="180" height="180" alt="" loading="lazy" decoding="async" draggable="false"></span>
         <span class="founder-badge" aria-hidden="true">点我</span>
         <span class="founder-name">甜片</span>
         <span class="founder-tooltip" id="founder-tip-tianpian" role="tooltip">点我可以看过往履历哦～</span>
       </button>
       <button class="founder-button" type="button" data-founder="ranran" aria-controls="ranran" aria-expanded="false" aria-describedby="founder-tip-ranran">
-        <span class="founder-face founder-face--ranran"><img src="assets/ranran/ranran_head_circle.png" alt="" width="512" height="512" draggable="false"></span>
+        <span class="founder-face founder-face--ranran"><img src="assets/performance/avatar-ranran-v1.webp" width="180" height="180" alt="" loading="lazy" decoding="async" draggable="false"></span>
         <span class="founder-badge" aria-hidden="true">点我</span>
         <span class="founder-name">然然</span>
         <span class="founder-tooltip" id="founder-tip-ranran" role="tooltip">点我可以看过往履历哦～</span>
       </button>
       <button class="founder-button" type="button" data-founder="jiajia" aria-controls="jiajia" aria-expanded="false" aria-describedby="founder-tip-jiajia">
-        <span class="founder-face founder-face--jiajia"><img src="assets/founders/jiajia-avatar-source.png" alt="" width="1348" height="1167" draggable="false"></span>
+        <span class="founder-face founder-face--jiajia"><img src="assets/performance/avatar-jiajia-v1.webp" width="180" height="180" alt="" loading="lazy" decoding="async" draggable="false"></span>
         <span class="founder-badge" aria-hidden="true">点我</span>
         <span class="founder-name">佳佳</span>
         <span class="founder-tooltip" id="founder-tip-jiajia" role="tooltip">点我可以看过往履历哦～</span>
@@ -137,13 +133,11 @@
     </nav>
     </section>
     <section class="tianpian-section founder-panel" id="tianpian" aria-label="甜片的编导与拍摄空间" hidden>
-      <video id="tianpian-video" muted playsinline preload="metadata" poster="assets/tianpian/tianpian-opening-4456-poster.jpg" width="1920" height="1080" aria-label="灰白猫按响场记板后，甜片走向机位拍摄，闪光进入白色页面">
-        <source src="assets/tianpian/tianpian-opening-4456-cut-8_85.mp4" type="video/mp4">
-      </video>
+      <video id="tianpian-video" muted playsinline preload="none" data-poster="assets/tianpian/tianpian-opening-4456-poster.jpg" width="1920" height="1080" aria-label="灰白猫按响场记板后，甜片走向机位拍摄，闪光进入白色页面" data-src-desktop="assets/performance/tianpian-desktop-v1.mp4" data-src-mobile="assets/performance/tianpian-mobile-v1.mp4"></video>
       <div class="tp-room" id="tp-room" aria-hidden="true">
         <div class="tp-room-stage" id="tp-room-stage">
-          <img class="tp-room-image" src="assets/tianpian/room/room-v4.png" width="1920" height="1080" alt="甜片坐在工作桌后。桌上有分镜本、甜序集手串和相机，灰白猫卧在一侧；后方白板展示合作账号与成绩。">
-          <img class="tp-chunchun-exit" src="assets/tianpian/room/chunchun-exit-v2.png" width="1024" height="1536" alt="虫虫已经跃出画面下沿，只能看见条纹衣的后半身和尾巴。" draggable="false">
+          <img class="tp-room-image" data-src="assets/performance/tianpian-room-v1.webp" width="1920" height="1080" alt="甜片坐在工作桌后。桌上有分镜本、甜序集手串和相机，灰白猫卧在一侧；后方白板展示合作账号与成绩。">
+          <img class="tp-chunchun-exit" data-src="assets/performance/chunchun-exit-v1.webp" width="1024" height="1536" alt="虫虫已经跃出画面下沿，只能看见条纹衣的后半身和尾巴。" draggable="false">
           <div class="tp-room-glow" id="tp-room-glow" aria-hidden="true"></div>
           <div class="tp-room-hotspots" id="tp-room-hotspots"></div>
         </div>
@@ -156,13 +150,9 @@
     <section class="rr-section founder-panel" id="ranran" aria-label="然然的剪辑空间" hidden>
       <div class="rr-sticky" id="rr-sticky">
         <div class="rr-scene" id="rr-scene">
-          <video class="rr-scrub" id="rr-scrub" muted playsinline preload="metadata" poster="assets/ranran/ranran_firstframe.png" aria-label="然然从剪辑小屋走出来，向右走">
-            <source src="assets/ranran/ranran_v1_clean.mp4" type="video/mp4">
-          </video>
-          <video class="rr-transition" id="rr-transition" muted playsinline preload="metadata" poster="assets/ranran/kling_fullscreen_start.png" aria-label="跟随然然进入剪辑空间">
-            <source src="assets/ranran/ranran_transition.mp4" type="video/mp4">
-          </video>
-          <img class="rr-pov" id="rr-pov" src="assets/ranran/kling_fullscreen_end.png" alt="进入然然的剪辑空间" width="1920" height="1080">
+          <video class="rr-scrub" id="rr-scrub" muted playsinline preload="none" data-poster="assets/performance/ranran-first-v1.webp" aria-label="然然从剪辑小屋走出来，向右走" data-src-desktop="assets/performance/ranran-desktop-v1.mp4" data-src-mobile="assets/performance/ranran-mobile-v1.mp4"></video>
+          <video class="rr-transition" id="rr-transition" muted playsinline preload="none" data-poster="assets/performance/ranran-transition-first-v1.webp" aria-label="跟随然然进入剪辑空间" data-src-desktop="assets/performance/ranran-transition-desktop-v1.mp4" data-src-mobile="assets/performance/ranran-transition-mobile-v1.mp4"></video>
+          <img class="rr-pov" id="rr-pov" data-src="assets/ranran/kling_fullscreen_end.png" alt="进入然然的剪辑空间" width="1920" height="1080">
           <div class="rr-screen" id="rr-screen">
             <div class="rr-boot" id="rr-boot">
               <span>正在打开：然然的项目</span>
@@ -171,14 +161,14 @@
             <div class="rr-editor" id="rr-editor">
               <aside class="rr-assets" id="rr-assets" aria-label="然然的剪辑工具">
                 <button class="rr-toolbox-trigger" id="rr-toolbox-trigger" type="button" aria-expanded="false" aria-controls="rr-tools" aria-label="打开然然的剪辑工具箱">
-                  <img src="assets/ranran/toolbox.png" alt="" width="280" height="240">
+                  <img data-src="assets/performance/toolbox-v1.webp" alt="" width="280" height="240">
                 </button>
                 <div class="rr-tools" id="rr-tools" hidden></div>
               </aside>
               <div class="rr-preview" id="rr-preview">
                 <div class="rr-guide" id="rr-guide">
                   <div class="rr-guide-art">
-                    <img src="assets/ranran/ranran-editing-scene-v1.png" alt="然然戴着耳机坐在电脑前专注剪辑，虫虫趴在提示牌旁。牌上写着：看样片点击，正在剪辑勿扰！" width="1672" height="941">
+                    <img data-src="assets/performance/ranran-editing-v1.webp" alt="然然戴着耳机坐在电脑前专注剪辑，虫虫趴在提示牌旁。牌上写着：看样片点击，正在剪辑勿扰！" width="1672" height="941">
                     <button class="rr-guide-open" id="rr-guide-open" type="button" aria-label="看样片：点击桌边提示牌"></button>
                   </div>
                 </div>
@@ -186,7 +176,7 @@
                   <div class="rr-work-info"><small id="rr-segment-index">作品片段 01 / 11</small><strong id="rr-segment-label"></strong><span id="rr-segment-type"></span></div>
                   <div class="rr-work-media">
                     <img class="rr-work-poster" id="rr-work-poster" alt="">
-                    <video class="rr-full-video" id="rr-full-video" muted playsinline preload="metadata" aria-label="然然后期剪辑完整混剪合辑"></video>
+                    <video class="rr-full-video" id="rr-full-video" muted playsinline preload="none" data-src-desktop="assets/ranran/reel/ranran_reel_full.mp4" data-src-mobile="assets/performance/ranran-reel-mobile-v1.mp4" aria-label="然然后期剪辑完整混剪合辑"></video>
                     <button class="rr-sound" id="rr-sound" type="button" aria-label="切换声音">声音开启</button>
                   </div>
                   <time class="rr-work-time" id="rr-work-time"></time>
@@ -216,10 +206,10 @@
                     <div class="rr-video-track" id="rr-video-track"></div>
                     <div class="rr-audio-track" id="rr-audio-track"></div>
                   </div>
-                  <div class="rr-playhead" id="rr-playhead" role="slider" tabindex="0" aria-label="拖动然然头像，定位时间轴" aria-valuemin="0" aria-valuemax="68" aria-valuenow="0"><img src="assets/ranran/ranran_head_circle.png" alt="" width="36" height="36"></div>
+                  <div class="rr-playhead" id="rr-playhead" role="slider" tabindex="0" aria-label="拖动然然头像，定位时间轴" aria-valuemin="0" aria-valuemax="68" aria-valuenow="0"><img data-src="assets/performance/avatar-ranran-v1.webp" alt="" width="36" height="36"></div>
                 </div>
                 <div class="rr-export-row" id="rr-export-row">
-                  <button class="rr-cat" id="rr-cat" type="button" aria-label="发现虫虫这只猫"><img src="assets/ranran/cat_cutout.png" alt="" width="48" height="48"></button>
+                  <button class="rr-cat" id="rr-cat" type="button" aria-label="发现虫虫这只猫"><img data-src="assets/performance/ranran-cat-v1.webp" alt="" width="48" height="48"></button>
                   <div class="rr-export-track"><i id="rr-export-fill"></i></div>
                   <span class="rr-plane" id="rr-plane" aria-hidden="true">➤</span>
                 </div>
@@ -230,21 +220,19 @@
       </div>
     </section>
     <section class="jiajia-section founder-panel" id="jiajia" aria-label="佳佳的直播操盘空间" hidden>
-      <video id="jiajia-video" muted playsinline preload="metadata" poster="assets/jiajia/jiajia-opening-4747-clean-poster.jpg" width="1280" height="720" aria-label="虫虫送来U盘，佳佳启动中控台，礼花落下后招呼访客靠近">
-        <source src="assets/jiajia/jiajia-opening-4747-clean-v1.mp4" type="video/mp4">
-      </video>
+      <video id="jiajia-video" muted playsinline preload="none" data-poster="assets/jiajia/jiajia-opening-4747-clean-poster.jpg" width="1280" height="720" aria-label="虫虫送来U盘，佳佳启动中控台，礼花落下后招呼访客靠近" data-src-desktop="assets/performance/jiajia-desktop-v1.mp4" data-src-mobile="assets/performance/jiajia-mobile-v1.mp4"></video>
       <div class="jj-workspace" id="jiajia-workspace" aria-hidden="true" inert></div>
     </section>
     <section class="projects-chapter" id="project-progress" aria-label="项目进程">
     <div class="about-us project-progress" aria-label="项目进程标题">
-      <img src="assets/projects/project-progress-transparent-v2.png" alt="项目进程：佳佳站在左侧看平板，甜片与右侧的然然交流分镜，四只猫穿插在木字之间。" width="1983" height="793" loading="lazy">
+      <img src="assets/performance/project-progress-v1.webp" alt="项目进程：佳佳站在左侧看平板，甜片与右侧的然然交流分镜，四只猫穿插在木字之间。" width="1983" height="793" loading="lazy">
     </div>
     <div id="projects" aria-label="项目进度" style="overflow:hidden">
       <div id="project-gallery-root"></div>
     </div>
     </section>
     <section class="about-us cooperation-banner" id="cooperation" aria-label="合作方式">
-      <img src="assets/cooperation/cooperation-transparent-v2.png" alt="合作方式：甜片靠在合字左侧，然然坐在中间递出方案，佳佳从右侧接过；四只猫分布在文字上下。" width="1983" height="793" loading="lazy">
+      <img src="assets/performance/cooperation-v1.webp" alt="合作方式：甜片靠在合字左侧，然然坐在中间递出方案，佳佳从右侧接过；四只猫分布在文字上下。" width="1983" height="793" loading="lazy">
       <div class="co-workbench">
         <div class="co-approach">
           <header class="co-intro"><h2>下一件事，<br>一起做成。</h2><p>一个作品，一个项目，或一段长期合作。</p></header>
@@ -254,9 +242,9 @@
             <label class="co-mode"><input type="radio" name="co-mode" value="长期共创"><span class="co-mode-body"><strong>长期共创</strong><span>持续做内容、经营账号，也一起迭代产品。</span></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5"/></svg></label>
           </fieldset>
           <div class="co-team" aria-label="按需求组合三位主理人的专业分工">
-            <div class="co-person"><span class="co-face co-face--tp"><svg viewBox="790 335 300 300" width="38" height="38" aria-hidden="true"><image href="assets/tianpian/room/room-v4.png" width="1920" height="1080"/></svg></span><span><strong>甜片</strong><small>策划 · 拍摄</small></span></div>
-            <div class="co-person"><span class="co-face co-face--rr"><img src="assets/ranran/ranran_head_circle.png" alt="" loading="lazy"></span><span><strong>然然</strong><small>剪辑 · 后期</small></span></div>
-            <div class="co-person"><span class="co-face co-face--jj"><img src="assets/founders/jiajia-avatar-source.png" alt="" loading="lazy"></span><span><strong>佳佳</strong><small>直播 · 投放 · AI</small></span></div>
+            <div class="co-person"><span class="co-face co-face--tp"><img src="assets/performance/avatar-tianpian-v1.webp" width="180" height="180" alt="" loading="lazy" decoding="async" draggable="false"></span><span><strong>甜片</strong><small>策划 · 拍摄</small></span></div>
+            <div class="co-person"><span class="co-face co-face--rr"><img src="assets/performance/avatar-ranran-v1.webp" width="180" height="180" alt="" loading="lazy" decoding="async" draggable="false"></span><span><strong>然然</strong><small>剪辑 · 后期</small></span></div>
+            <div class="co-person"><span class="co-face co-face--jj"><img src="assets/performance/avatar-jiajia-v1.webp" width="180" height="180" alt="" loading="lazy" decoding="async" draggable="false"></span><span><strong>佳佳</strong><small>直播 · 投放 · AI</small></span></div>
           </div>
         </div>
         <form class="co-brief" id="co-brief">
@@ -278,6 +266,7 @@
       <ol class="co-process" aria-label="合作流程"><li>聊清目标</li><li>确认范围、报价与排期</li><li>分工执行与验收</li></ol>
     </section>
   </main>
+  <script src="media-loading.js?v=20261101-performance"></script>
   <script>
 
     const hero=document.querySelector('.hero');
@@ -383,13 +372,11 @@
     }
 
   </script>
-  <script type="module" src="ranran-editor.js?v=20261101-full-reel"></script>
-  <script src="tianpian-room.js?v=20261030g"></script>
-  <script src="jiajia-video.js?v=20261101-gesture"></script>
-  <script type="module" src="jiajia-panel.js?v=20261101-proof"></script>
-  <script type="module" src="project-carousel.js?v=20261101-bounce"></script>
-  <script src="founder-navigation.js?v=20261101-cooperation"></script>
-  <script src="easter-egg.js?v=20261101-contact-shadow" defer></script>
+  <script type="module" src="ranran-editor.js?v=20261101-performance"></script>
+  <script src="tianpian-room.js?v=20261101-performance"></script>
+  <script src="jiajia-video.js?v=20261101-performance"></script>
+  <script src="founder-navigation.js?v=20261101-performance"></script>
+  <script src="easter-egg.js?v=20261101-performance" defer></script>
   <script src="cooperation.js?v=20261101-brief-final" defer></script>
 </body>
 </html>

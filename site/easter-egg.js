@@ -21,7 +21,7 @@
     <dialog class="sanhe-gacha" aria-label="叁合隐藏彩蛋扭蛋机">
       <button type="button" class="gacha-close" aria-label="关闭彩蛋"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
       <canvas class="gacha-canvas" aria-hidden="true"></canvas>
-      <div class="gacha-stage"><div class="gacha-machine"><img src="${BASE}cat-gacha-v2.png" alt="四只猫趴在扭蛋机上。恭喜你解锁我们的隐藏彩蛋！转动扭蛋机，会有惊喜！" width="1086" height="1448" loading="lazy" draggable="false"><button type="button" class="gacha-knob" aria-label="转动扭蛋机，抽取一次合作福利"><span class="gacha-knob-face" aria-hidden="true"></span></button><span class="gacha-capsule" aria-hidden="true"></span></div></div>
+      <div class="gacha-stage"><div class="gacha-machine"><img src="assets/performance/cat-gacha-v1.webp" alt="四只猫趴在扭蛋机上。恭喜你解锁我们的隐藏彩蛋！转动扭蛋机，会有惊喜！" width="1086" height="1448" loading="lazy" draggable="false"><button type="button" class="gacha-knob" aria-label="转动扭蛋机，抽取一次合作福利"><span class="gacha-knob-face" aria-hidden="true"></span></button><span class="gacha-capsule" aria-hidden="true"></span></div></div>
       <div class="gacha-reward" hidden><img alt="" draggable="false"><button type="button" class="gacha-cooperate">带着这份福利聊合作<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><p class="gacha-error" hidden role="alert"></p>
     </dialog>`;
   document.body.appendChild(host);
@@ -31,7 +31,7 @@
     if (target.dataset.frame === String(pose)) return;
     const [x,y,w,h] = FRAMES[pose];
     const clip = `laosan-cut-${name}`;
-    target.innerHTML = `<svg viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><clipPath id="${clip}" clipPathUnits="userSpaceOnUse"><rect x="${x}" y="${y}" width="${w}" height="${h}"/></clipPath></defs><image href="${BASE}laosan-states-v1.png" width="1536" height="1024" clip-path="url(#${clip})"/></svg>`;
+    target.innerHTML = `<svg viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><clipPath id="${clip}" clipPathUnits="userSpaceOnUse"><rect x="${x}" y="${y}" width="${w}" height="${h}"/></clipPath></defs><image href="assets/performance/laosan-states-v1.webp" width="1536" height="1024" clip-path="url(#${clip})"/></svg>`;
     target.dataset.frame = String(pose);
   }
 
@@ -194,7 +194,7 @@
     if (!state.reward) return;
     dialog.classList.remove('is-drawing'); dialog.classList.add('has-reward');
     knob.disabled = true; knob.setAttribute('aria-label','已经抽取，不能重复抽取');
-    reward.firstElementChild.src = `${BASE}reward-${state.reward.index+1}.png`;
+    reward.firstElementChild.src = `assets/performance/reward-${state.reward.index+1}-v1.webp`;
     reward.firstElementChild.alt = REWARDS[state.reward.index]; reward.hidden = false;
     if (dialog.open && (!dialog.contains(document.activeElement) || document.activeElement === knob)) host.querySelector('.gacha-cooperate').focus({preventScroll:true});
     announce(`你的奖励是：${REWARDS[state.reward.index]}。该浏览器已经抽取过一次。`);
@@ -256,7 +256,7 @@
       channel?.postMessage('changed');
       if (!state.reward) throw new Error('not unlocked');
       if (!dialog.open) { busy = false; showReward(); return; }
-      reward.firstElementChild.src = `${BASE}reward-${state.reward.index+1}.png`;
+      reward.firstElementChild.src = `assets/performance/reward-${state.reward.index+1}-v1.webp`;
       reward.firstElementChild.alt = REWARDS[state.reward.index];
       dialog.classList.add('is-drawing');
       rewardTimer = setTimeout(() => { busy = false; showReward(); if (dialog.open) burst(); },reduced.matches ? 0 : 2100);
