@@ -266,7 +266,7 @@ function startOpening() {
   try { transition.currentTime = 0; } catch {}
   scrub.currentTime = 0;
   render(0);
-  scrub.play().catch(() => {});
+  (window.SANHEMedia.play ? window.SANHEMedia.play(scrub) : scrub.play()).catch(() => {});
 }
 function startTransition() {
   if (!openingStarted || transitionStarted) return;
@@ -274,7 +274,7 @@ function startTransition() {
   window.SANHEMedia?.prepareVideo(transition);
   transition.classList.add('is-active');
   try { transition.currentTime = 0; } catch {}
-  transition.play().catch(() => finishTransition());
+  (window.SANHEMedia.play ? window.SANHEMedia.play(transition) : transition.play()).catch(() => {});
   render(latestRawP);
 }
 function finishTransition() {
@@ -401,7 +401,7 @@ function setupEntry() {
       clearTimeout(guideTimer);
       [scrub, transition, fullVideo].forEach(v => v.pause());
     } else if (openingStarted) {
-      if (!openingComplete) (transitionStarted ? transition : scrub).play().catch(() => {});
+      if (!openingComplete) (window.SANHEMedia.play ? window.SANHEMedia.play(transitionStarted ? transition : scrub) : (transitionStarted ? transition : scrub).play()).catch(() => {});
       else if (preview.dataset.mode === 'guide') startReelAfterIntro();
       else if (resumeVisible && fullIndex !== -1) requestPlayback();
     }
@@ -510,14 +510,14 @@ async function init() {
   });
   playFullButton.addEventListener('click',()=>seekReel(0,{unmute:true}));
   cat.addEventListener('click',()=>{cat.classList.remove('is-hop');void cat.offsetWidth;cat.classList.add('is-hop');dispatchEvent(new CustomEvent('cat-found',{detail:{id:'cat-ranran'}}))});
-  scrub.addEventListener('error',startTransition);
+  scrub.addEventListener('error',()=>window.SANHEMedia.offerRetry?.(scrub));
   scrub.addEventListener('timeupdate',()=>{
     if (scrub.currentTime>1.5 && !transitionStarted) window.SANHEMedia?.prepareVideo(transition);
   });
   scrub.addEventListener('ended',startTransition);
   transition.addEventListener('timeupdate',()=>render(latestRawP));
   transition.addEventListener('playing',()=>window.SANHEMedia?.prepareVideo(fullVideo,'metadata'));
-  transition.addEventListener('error',finishTransition);
+  transition.addEventListener('error',()=>window.SANHEMedia.offerRetry?.(transition));
   transition.addEventListener('ended',finishTransition);
   document.getElementById('rr-guide-open').addEventListener('click', () => {
     seekReel(0,{unmute:true});

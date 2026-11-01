@@ -100,8 +100,8 @@
   .tp-detail-shell{width:100vw;height:100dvh;border:0;box-shadow:none}
   .tp-detail-head{height:58px}.tp-detail-foot{height:58px}
   .tp-detail[open] .tp-detail-shell{animation-duration:.4s}
-  .tp-slide,.tp-slide.is-cover{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;gap:18px;padding:20px 20px 30px;align-content:start}
-  .tp-slide-visual{height:48vh}
+  .tp-slide,.tp-slide.is-cover{grid-template-columns:1fr;grid-template-rows:auto auto;gap:18px;padding:20px 20px 30px;align-content:start;align-items:start}
+  .tp-slide-visual{height:clamp(150px,33dvh,300px)}
   .tp-slide-words h2{font-size:clamp(33px,9vw,52px);margin-bottom:10px}
   .tp-slide.is-career .tp-slide-words h2{font-size:clamp(30px,8vw,46px)}
   .tp-slide-words p{font-size:15px;margin-bottom:8px}

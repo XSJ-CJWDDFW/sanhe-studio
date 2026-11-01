@@ -36,8 +36,26 @@
     });
   }
   const modules = new Map();
+  const attempts = new Map();
   function loadModule(url) {
-    if (!modules.has(url)) modules.set(url, import(url).catch(error=>{modules.delete(url);console.error('Chapter could not load:',error)}));
+    if (!modules.has(url)) {
+      const attempt = attempts.get(url) || 0;
+      attempts.set(url, attempt + 1);
+      const source = attempt ? `${url}&retry=${attempt}` : url;
+      modules.set(url, import(source).catch(error => {
+        modules.delete(url);
+        console.error('Chapter could not load:', error);
+        const host = document.getElementById(url.includes('jiajia') ? 'jiajia-workspace' : 'project-gallery-root');
+        if (!host || host.querySelector('[data-module-retry]')) return;
+        const retry = document.createElement('button');
+        retry.type = 'button';
+        retry.dataset.moduleRetry = '';
+        retry.textContent = '重新打开';
+        retry.style.cssText = 'display:block;margin:20px auto;padding:12px 20px;border:1px solid #819b97;border-radius:24px;background:#f7f8fc;color:#254b45;cursor:pointer';
+        retry.addEventListener('click', () => { retry.remove(); loadModule(url); });
+        host.appendChild(retry);
+      }));
+    }
     return modules.get(url);
   }
   window.SANHEMedia = {prepareVideo,prepareImage,warmFounder,releaseFounder,lightMedia};

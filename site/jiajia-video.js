@@ -41,15 +41,26 @@
   }
   function play() {
     window.SANHEMedia?.prepareVideo(video);
-    video.play().then(() => {
+    window.SANHEMedia.play(video).then(() => {
       if (!visible || document.hidden || handedOff) video.pause();
     }).catch(error => {
       if (error.name !== 'AbortError' && visible) {
-        video.controls = true;
+        window.SANHEMedia.offerRetry(video, true);
       }
     });
   }
   section.addEventListener('founder-close', reset);
+  function resumeInView() {
+    const rect = section.getBoundingClientRect();
+    if (section.hidden || document.hidden || handedOff || reduced || rect.top >= innerHeight * .75 || rect.bottom <= innerHeight * .25) return;
+    visible = true;
+    started = true;
+    if (video.paused && !video.ended) play();
+  }
+  section.addEventListener('founder-open', () => requestAnimationFrame(resumeInView));
+  // Metadata can arrive after the initial intersection callback on a restored
+  // mobile page. Recheck the actual viewport instead of leaving a paused poster.
+  video.addEventListener('loadeddata', resumeInView);
   section.addEventListener('jiajia-replay', () => {
     reset();
     started = true;

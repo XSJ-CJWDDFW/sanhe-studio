@@ -81,7 +81,7 @@
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.media video,.media img,.media::after,.hero.is-welcome .headline,.hero.is-welcome .headline h1,.hero.is-welcome .headline p,.dark-curtain,.ranran,.tianpian-flash{transition:none}.tianpian-flash.is-developing img{animation:none}}
   </style>
 <link rel="stylesheet" href="ranran-editor.css?v=20261101-performance">
-  <link rel="stylesheet" href="tianpian-room.css?v=20261030k">
+  <link rel="stylesheet" href="tianpian-room.css?v=20261101-review">
   <link rel="stylesheet" href="project-carousel.css?v=20261101-bounce">
   <link rel="stylesheet" href="studio-background.css?v=20261101-transparent">
   <link rel="stylesheet" href="founder-navigation.css?v=20261101-performance">
@@ -228,7 +228,7 @@
       <img src="assets/performance/project-progress-v1.webp" alt="项目进程：佳佳站在左侧看平板，甜片与右侧的然然交流分镜，四只猫穿插在木字之间。" width="1983" height="793" loading="lazy">
     </div>
     <div id="projects" aria-label="项目进度" style="overflow:hidden">
-      <div id="project-gallery-root"></div>
+      <div id="project-gallery-root"><img src="assets/performance/yifeichongtian-source-v1.webp" alt="一飞冲天项目" loading="lazy" width="900" height="900" style="display:block;width:min(75vw,520px);height:auto;margin:auto;border-radius:20px"></div>
     </div>
     </section>
     <section class="about-us cooperation-banner" id="cooperation" aria-label="合作方式">
@@ -266,7 +266,8 @@
       <ol class="co-process" aria-label="合作流程"><li>聊清目标</li><li>确认范围、报价与排期</li><li>分工执行与验收</li></ol>
     </section>
   </main>
-  <script src="media-loading.js?v=20261101-performance-2"></script>
+  <script src="media-loading.js?v=20261101-performance-3"></script>
+  <script src="media-recovery.js?v=20261101-review"></script>
   <script>
 
     const hero=document.querySelector('.hero');
@@ -279,12 +280,12 @@
       if(staticImage)hero.classList.add('is-static');
     }
     async function play(){
-      try{await video.play();}
-      catch(error){if(error.name!=='AbortError')finish(true);}
+      try{await window.SANHEMedia.play(video);}
+      catch(error){/* A visible play control handles blocked autoplay. */}
     }
     video.addEventListener('timeupdate',sync);
     video.addEventListener('ended',()=>finish(false));
-    video.addEventListener('error',()=>finish(true));
+    video.addEventListener('error',()=>window.SANHEMedia.offerRetry(video));
     if('requestVideoFrameCallback' in video){
       const tick=()=>{sync();video.requestVideoFrameCallback(tick)};
       video.requestVideoFrameCallback(tick);
@@ -296,8 +297,8 @@
       try{
         video.currentTime=0;
         hero.classList.remove('is-welcome','is-finished','is-static','is-leaving');
-        await video.play();
-      }catch(error){finish(true);}
+        await window.SANHEMedia.play(video);
+      }catch(error){window.SANHEMedia.offerRetry(video,true);}
     });
     addEventListener('scroll',()=>hero.classList.toggle('is-leaving',scrollY>innerHeight*.18),{passive:true});
 
@@ -352,29 +353,34 @@
       };
       tianpianVideo.requestVideoFrameCallback(tickTianpian);
     }
-    if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+      tianpianSection.classList.add('is-white','is-room');
+      document.getElementById('tp-room').setAttribute('aria-hidden','false');
+      tianpianSection.addEventListener('founder-open',()=>{tianpianSection.classList.add('is-white','is-room');document.getElementById('tp-room').setAttribute('aria-hidden','false');});
+    }else{
       let tianpianStarted=false;
       tianpianSection.addEventListener('founder-close',()=>{ tianpianStarted=false; });
       const tianpianObserver=new IntersectionObserver(([entry])=>{
         if(entry.intersectionRatio>=.25 && !tianpianStarted){
           tianpianStarted=true;
           resetTianpian();
-          tianpianVideo.play().catch(()=>{
-            tianpianSection.classList.add('is-white','is-room');
-            document.getElementById('tp-room').setAttribute('aria-hidden','false');
-          });
+          window.SANHEMedia.play(tianpianVideo).catch(()=>{});
         }else if(!entry.isIntersecting){
           resetTianpian();
           tianpianStarted=false;
         }
       },{threshold:[0,.25]});
       tianpianObserver.observe(tianpianSection);
+      document.addEventListener('visibilitychange',()=>{
+        if(document.hidden)tianpianVideo.pause();
+        else if(tianpianStarted&&!tianpianSection.hidden&&!tianpianSection.classList.contains('is-room'))window.SANHEMedia.play(tianpianVideo).catch(()=>{});
+      });
     }
 
   </script>
-  <script type="module" src="ranran-editor.js?v=20261101-performance"></script>
+  <script type="module" src="ranran-editor.js?v=20261101-review"></script>
   <script src="tianpian-room.js?v=20261101-performance"></script>
-  <script src="jiajia-video.js?v=20261101-performance"></script>
+  <script src="jiajia-video.js?v=20261101-review"></script>
   <script src="founder-navigation.js?v=20261101-performance-2"></script>
   <script src="easter-egg.js?v=20261101-performance" defer></script>
   <script src="cooperation.js?v=20261101-brief-final" defer></script>
