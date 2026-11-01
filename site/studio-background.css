@@ -1,0 +1,52 @@
+/* The site's continuous cool-white studio, sampled from the animated chapters. */
+:root{
+  --paper:#f7f8fc;
+  --studio-image:url("assets/backgrounds/sanhe-cool-studio-v1.webp");
+}
+body{isolation:isolate;background:var(--paper)}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:var(--paper) var(--studio-image) center center/cover no-repeat;
+}
+.hero,.media,.about-us,.tianpian-section,.jiajia-section,#projects,.tp-room{
+  background:transparent;
+}
+.rr-section{background:transparent}
+.rr-sticky{background-image:var(--studio-image);background-position:center;background-size:cover}
+.rr-preview[data-mode="guide"] .rr-guide{
+  background:var(--paper) var(--studio-image) center/cover no-repeat;
+}
+.media::after{background:rgba(247,248,252,.57)}
+.tianpian-section.is-room>video{visibility:hidden}
+
+/* Fit the media element itself to the 16:9 picture, so the feather sits on the
+   picture's real edge rather than on the outer viewport's letterbox. */
+.media,.tianpian-section,.jiajia-section,.rr-scene{container-type:size}
+.media>video,.media>img,.tianpian-section>video,.jiajia-section>video,
+.rr-scene>.rr-scrub,.rr-scene>.rr-transition{
+  position:absolute;inset:auto;left:50%;top:50%;
+  width:min(100%,calc(100cqh * 16 / 9));height:auto;aspect-ratio:16/9;
+  transform:translate(-50%,-50%);object-fit:contain;
+}
+.media>video,.media>img,.tianpian-section>video,.jiajia-section>video,
+.rr-scene>.rr-scrub,.rr-scene>.rr-transition,
+.about-us>img,.tp-room-image,.rr-guide-art>img{
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 12px,#000 calc(100% - 12px),transparent),linear-gradient(to bottom,transparent,#000 14px,#000 calc(100% - 14px),transparent);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent,#000 12px,#000 calc(100% - 12px),transparent),linear-gradient(to bottom,transparent,#000 14px,#000 calc(100% - 14px),transparent);
+  mask-composite:intersect;
+}
+.tp-detail-shell{
+  background:var(--paper) var(--studio-image) center/cover no-repeat;
+}
+.tp-detail-head{background:rgba(247,248,252,.72)}
+.tp-slide-visual{background:rgba(233,237,245,.55)}
+.tp-photo-back{background:rgba(247,248,252,.92)}
+@media(max-width:700px){
+  .media>video,.media>img,.tianpian-section>video,.jiajia-section>video,
+  .rr-scene>.rr-scrub,.rr-scene>.rr-transition,
+  .about-us>img,.tp-room-image,.rr-guide-art>img{
+    -webkit-mask-image:linear-gradient(to right,transparent,#000 6px,#000 calc(100% - 6px),transparent),linear-gradient(to bottom,transparent,#000 8px,#000 calc(100% - 8px),transparent);
+    mask-image:linear-gradient(to right,transparent,#000 6px,#000 calc(100% - 6px),transparent),linear-gradient(to bottom,transparent,#000 8px,#000 calc(100% - 8px),transparent);
+  }
+}

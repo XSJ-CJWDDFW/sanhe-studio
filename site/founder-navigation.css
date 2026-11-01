@@ -1,0 +1,51 @@
+.founder-panel[hidden]{display:none!important}
+.founder-navigation{position:relative;z-index:6;display:flex;align-items:center;justify-content:space-around;gap:clamp(24px,8vw,130px);width:min(100%,1060px);min-height:248px;margin:0 auto;padding:30px 50px 55px;scroll-margin-top:24px}
+.founder-button{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;min-width:100px;padding:0;border:0;color:#4b515a;background:transparent;font:500 15px/1.4 "Noto Sans SC","Microsoft YaHei",sans-serif;cursor:pointer;touch-action:manipulation;isolation:isolate}
+.founder-button:nth-child(1){translate:0 18px;rotate:-4deg}
+.founder-button:nth-child(2){translate:0 -12px;rotate:2deg}
+.founder-button:nth-child(3){translate:0 28px;rotate:4deg}
+.founder-face{position:relative;display:block;flex:none;width:112px;height:112px;overflow:hidden;border-radius:50%;background:#f7f8fc;border:3px solid #f7f8fc;box-shadow:0 5px 18px rgba(47,61,82,.12);transition:transform .3s,filter .3s,box-shadow .3s}
+.founder-face::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(72,86,105,.08);pointer-events:none}
+.founder-button::before{content:"";position:absolute;z-index:-1;top:-5px;left:50%;width:122px;height:122px;translate:-50% 0;border-radius:50%;background:conic-gradient(from 20deg,#66d6be,#68a9e0,#ae92cf,#69d6bf);box-shadow:0 0 16px rgba(96,190,191,.2);animation:founder-breathe 2.5s ease-in-out infinite}
+.founder-button:nth-child(2)::before{animation-delay:-.8s}.founder-button:nth-child(3)::before{animation-delay:-1.6s}
+.founder-face img{position:absolute;max-width:none;height:auto;pointer-events:none;user-select:none}
+.founder-face--tianpian img{width:673.684%;left:-277.193%;top:-117.544%}
+.founder-face--ranran img{width:100%;height:100%;left:0;top:0;object-fit:cover}
+.founder-face--jiajia img{width:224.667%;left:-66.667%;top:0}
+.founder-badge{position:absolute;z-index:2;top:96px;left:50%;translate:-50% 0;border:2px solid #f7f8fc;border-radius:10px;padding:2px 12px;color:#fff;background:#327d79;white-space:nowrap;font-size:11px;line-height:1.5;transition:transform .3s,background .3s}
+.founder-navigation.has-selection .founder-button[aria-expanded="false"] .founder-face{filter:brightness(.83) saturate(.72)}
+.founder-button[aria-expanded="true"] .founder-face{transform:scale(1.12);box-shadow:0 8px 25px rgba(47,61,82,.18)}
+.founder-button[aria-expanded="true"]::before{animation:none;scale:1.12;opacity:1;background:conic-gradient(#5bcbae,#76ace2,#a893d5,#5bcbae)}
+.founder-button[aria-expanded="true"] .founder-badge{transform:translateY(6px);background:#246d66}
+.founder-button[aria-expanded="true"] .founder-name{color:#246d66;font-weight:700}
+.founder-button:hover .founder-face,.founder-button:focus-visible .founder-face{filter:none;box-shadow:0 8px 24px rgba(47,61,82,.18)}
+.founder-tooltip{position:absolute;left:50%;bottom:calc(100% + 17px);transform:translate(-50%,5px);padding:7px 11px;white-space:nowrap;border-radius:7px;background:rgba(38,45,54,.92);color:#fff;font-size:12px;line-height:1.5;font-weight:400;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s,transform .16s}
+.founder-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:rgba(38,45,54,.92)}
+.founder-button:hover .founder-tooltip,.founder-button:focus-visible .founder-tooltip,.founder-button.is-touched .founder-tooltip{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.founder-button:focus-visible{outline:2px solid #5cc8a8;outline-offset:16px;border-radius:50px}
+.founder-panel{scroll-margin-top:0}
+.founder-collapse{position:absolute;z-index:30;top:14px;right:clamp(14px,2.5vw,40px);width:40px;height:40px;padding:0;display:grid;place-items:center;border:1px solid rgba(159,173,185,.5);border-radius:50%;background:rgba(247,248,252,.88);backdrop-filter:blur(8px);color:#49535d;cursor:pointer;touch-action:manipulation}
+.founder-collapse:hover{border-color:#5cc8a8;color:#267d66}
+@keyframes founder-breathe{0%,100%{opacity:.65;scale:.98}50%{opacity:1;scale:1.035}}
+/* These three banners are real alpha cutouts; no rectangular feathered matte. */
+.about-us>img,.project-progress>img,.cooperation-banner>img{height:100%;width:auto;max-width:92%;transform:none;mask-image:none!important;-webkit-mask-image:none!important}
+#about-us{height:clamp(160px,20vw,290px)}
+.project-progress{height:clamp(155px,18vw,270px)}
+.cooperation-banner{height:clamp(160px,18vw,275px)}
+@media(max-width:700px){
+ .founder-navigation{min-height:208px;padding:20px 16px 42px;gap:12px}
+ .founder-button{min-width:0;flex:1;font-size:13px;gap:14px}
+ .founder-face{width:clamp(64px,19vw,84px);height:clamp(64px,19vw,84px);border-width:2px}
+ .founder-button::before{width:calc(clamp(64px,19vw,84px) + 8px);height:calc(clamp(64px,19vw,84px) + 8px);top:-4px}
+ .founder-badge{top:calc(clamp(64px,19vw,84px) - 13px);font-size:10px;padding:1px 8px}
+ .founder-button:nth-child(1){translate:0 10px}.founder-button:nth-child(2){translate:0 -10px}.founder-button:nth-child(3){translate:0 18px}
+ .founder-tooltip{font-size:11px;padding:6px 8px}
+ .founder-button:first-child .founder-tooltip{left:-7px;transform:translate(0,5px)}
+ .founder-button:first-child:hover .founder-tooltip,.founder-button:first-child:focus-visible .founder-tooltip,.founder-button:first-child.is-touched .founder-tooltip{transform:translate(0,0)}
+ .founder-button:last-child .founder-tooltip{left:auto;right:-7px;transform:translate(0,5px)}
+ .founder-button:last-child:hover .founder-tooltip,.founder-button:last-child:focus-visible .founder-tooltip,.founder-button:last-child.is-touched .founder-tooltip{transform:translate(0,0)}
+ .founder-collapse{top:10px;right:12px}
+ #about-us{height:clamp(125px,36vw,175px)}
+ .project-progress,.cooperation-banner{height:clamp(125px,34vw,165px)}
+}
+@media(prefers-reduced-motion:reduce){.founder-face,.founder-tooltip,.founder-badge{transition:none}.founder-button::before{animation:none}}

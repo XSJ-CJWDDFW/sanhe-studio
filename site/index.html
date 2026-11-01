@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>叁合 SANHE · 各有所见，合有所成。</title>
+  <style>
+    :root{--paper:#fff;--ink:#282623;--muted:#827970;--wood:#684735;--rule:#e9e4df}
+    *{box-sizing:border-box}
+    html{scroll-behavior:auto;scroll-padding-top:32px}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    :focus-visible{outline:2px solid var(--wood);outline-offset:6px}
+    .topbar{position:absolute;z-index:5;inset:0 0 auto;height:80px;padding:0 clamp(24px,4.5vw,86px);display:flex;align-items:center}
+    .wordmark{font-family:Arial,sans-serif;font-size:22px;font-weight:800;letter-spacing:.17em}
+    .hero{position:relative}
+    .scene{position:relative;width:100%;aspect-ratio:16/9;margin:0 auto}
+    .media{position:relative;width:100%;height:100%;background:#fff;overflow:hidden}
+    .media video,.media img{display:block;width:100%;height:100%;object-fit:contain;filter:blur(0) saturate(1);transition:filter 1s ease}
+    .media img{position:absolute;inset:0}
+    .media video{position:relative;z-index:1}
+    .media::after{content:"";position:absolute;inset:0;z-index:2;background:rgba(255,255,255,.57);opacity:0;transition:opacity 1s ease;pointer-events:none}
+    .hero.is-static video{visibility:hidden}
+    .headline{position:absolute;z-index:3;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 5%;text-align:center;pointer-events:none;opacity:0;transform:translateY(12px);transition:none}
+    .headline h1{margin:0;color:#211e1c;font-family:"Noto Serif SC","Source Han Serif SC","STSong",serif;font-size:clamp(42px,4.5vw,72px);font-weight:700;line-height:1.35;letter-spacing:.025em;clip-path:inset(0 100% 0 0);transition:none}
+    .replay-title{display:inline-flex;align-items:baseline;justify-content:center;gap:.28em;padding:0;border:0;background:none;color:inherit;font:inherit;letter-spacing:inherit;cursor:pointer;pointer-events:none}
+    .hero.is-welcome .replay-title{pointer-events:auto}
+    .headline .latin{font-family:Georgia,"Times New Roman",serif;font-size:.65em;font-weight:600;letter-spacing:.13em}
+    .headline p{margin:18px 0 0;color:#211e1c;font-family:"Noto Serif SC","Source Han Serif SC","STSong",serif;font-size:clamp(19px,1.45vw,25px);font-weight:650;letter-spacing:.13em;line-height:1.6;text-shadow:0 1px 7px rgba(255,255,255,.95);opacity:0;transition:none}
+    .hero.is-welcome .media video,.hero.is-welcome .media img{filter:blur(8px) saturate(.82)}
+    .hero.is-welcome .media::after{opacity:1}
+    .hero.is-welcome .headline{opacity:1;transform:translateY(0);transition:opacity .75s ease .18s,transform .75s ease .18s}
+    .hero.is-welcome .headline h1{clip-path:inset(0 0 0 0);transition:clip-path .95s ease .25s}
+    .hero.is-welcome .headline p{opacity:1;transition:opacity .7s ease .65s}
+    .hero.is-welcome.is-leaving .headline{opacity:0;transform:translateY(-26px);transition:opacity .35s ease,transform .5s ease}
+    .hero.is-welcome.is-leaving .replay-title{pointer-events:none}
+    .about-us{width:100%;height:clamp(150px,16vw,270px);display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff}
+    .about-us img{display:block;width:auto;max-width:100%;height:100%;object-fit:contain;transform:translateY(-8%)}
+    .project-progress img{transform:none}
+    .tianpian-section{position:relative;width:100%;height:100svh;overflow:hidden;background:#f8f8fd}
+    .tianpian-section video{display:block;width:100%;height:100%;object-fit:contain}
+    .jiajia-section{position:relative;width:100%;height:100svh;overflow:hidden;background:#f8f8fd}
+    .jiajia-section video{display:block;width:100%;height:100%;object-fit:contain}
+    .tianpian-whiteout{position:absolute;z-index:2;inset:0;background:#fff;opacity:0;pointer-events:none}
+    .tianpian-section.is-white .tianpian-whiteout{opacity:1}
+    .tianpian-section.is-white.is-room .tianpian-whiteout{opacity:0;transition:opacity .6s ease .65s}
+    .tianpian-flash{position:fixed;z-index:20;inset:0;background:#fff;opacity:0;visibility:hidden;pointer-events:none}
+    .tianpian-flash.is-active{opacity:1;visibility:visible}
+    .tianpian-flash.is-release{opacity:0;visibility:visible;transition:opacity .38s ease-out}
+    .tianpian-flash img{display:block;width:100%;height:100%;object-fit:contain;opacity:0;mask-image:radial-gradient(ellipse 58% 48% at 50% 52%,#000 38%,transparent 100%)}
+    .tianpian-flash.is-developing img{animation:tianpian-develop 1.18s ease-out forwards}
+    @keyframes tianpian-develop{0%{opacity:0;filter:brightness(2.5) saturate(.1) blur(12px)}38%{opacity:.18;filter:brightness(1.85) saturate(.35) blur(7px)}78%{opacity:.56;filter:brightness(1.1) saturate(.8) blur(0)}100%{opacity:.34;filter:brightness(1.3) saturate(.6) blur(2px)}}
+    .ranran{position:relative;background:#fff;padding:0;transition:background 1.65s ease}
+    .ranran.is-complete{background:#000}
+    .ranran-stage{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#fff;margin:0 auto}
+    .ranran-stage video,.ranran-stage .ranran-fallback{display:block;width:100%;height:100%;object-fit:contain}
+    .ranran-stage .ranran-fallback{position:absolute;inset:0;opacity:0}
+    .ranran.is-static .ranran-fallback{opacity:1}
+    .ranran.is-static video{visibility:hidden}
+    .chapter-mark{position:absolute;z-index:2;left:4%;bottom:4%;display:flex;align-items:center;gap:12px;color:#6c615b;font-size:12px;letter-spacing:.12em;pointer-events:none;opacity:0;transition:opacity .45s ease}
+    .ranran.is-playing .chapter-mark{opacity:1}
+    .chapter-mark .rule{width:28px;height:1px;background:#a99589}
+    .dark-curtain{position:absolute;z-index:3;inset:0;pointer-events:none;background:#000;opacity:0;transition:opacity 1.2s ease-in-out}
+    .ranran.is-fading .dark-curtain,.ranran.is-complete .dark-curtain{opacity:1}
+    .black-stage{min-height:100svh;background:#000}
+    @media(max-width:700px){
+      .topbar{height:64px}.wordmark{font-size:19px}
+      .hero{min-height:0;height:100svh;display:flex;align-items:center}
+      .scene{width:100%;height:auto;aspect-ratio:16/9}
+      .media video,.media img{object-fit:contain}
+      .headline{padding:0 18px}
+      .headline h1{font-size:clamp(27px,8vw,42px)}
+      .replay-title{gap:.18em}
+      .headline p{font-size:clamp(13px,3.7vw,17px);letter-spacing:.04em;margin-top:7px}
+      .hero.is-welcome .media video,.hero.is-welcome .media img{filter:blur(5px) saturate(.82)}
+      .about-us{height:clamp(110px,32vw,160px)}
+      .ranran{padding-bottom:0}.ranran-stage{width:100%}
+      .chapter-mark{left:18px;bottom:12px;font-size:10px}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.media video,.media img,.media::after,.hero.is-welcome .headline,.hero.is-welcome .headline h1,.hero.is-welcome .headline p,.dark-curtain,.ranran,.tianpian-flash{transition:none}.tianpian-flash.is-developing img{animation:none}}
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ranran-editor.css?v=20261101-full-reel">
+  <link rel="stylesheet" href="tianpian-room.css?v=20261030k">
+  <link rel="stylesheet" href="project-carousel.css?v=20261101-bounce">
+  <link rel="stylesheet" href="studio-background.css?v=20261101-transparent">
+  <link rel="stylesheet" href="founder-navigation.css?v=20261101-icons">
+  <link rel="stylesheet" href="jiajia-panel.css?v=20261101-proof">
+  <link rel="stylesheet" href="chapter-layout.css?v=20261101-small-marks">
+  <link rel="stylesheet" href="easter-egg.css?v=20261101-contact-shadow">
+  <link rel="stylesheet" href="cooperation.css?v=20261101-avatar-fix">
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="#welcome" aria-label="叁合 SANHE 首页">SANHE</a>
+  </header>
+  <main>
+    <section class="hero" id="welcome" aria-labelledby="studio-title">
+      <div class="scene">
+        <div class="headline">
+          <h1 id="studio-title"><button class="replay-title" id="replay" type="button" aria-label="重播开场视频"><span>叁合</span><span class="latin">SANHE</span></button></h1>
+          <p>各有所见，合有所成。</p>
+        </div>
+        <div class="media">
+          <img src="end.png" alt="然然、佳佳和甜片在长木桌后迎接访客，佳佳左臂抱猫、右手伸出。" width="1920" height="1080">
+          <video id="intro" muted playsinline preload="auto" poster="start.png" width="1920" height="1080" aria-label="三位主理人从聊天中回过神来，迎接访客">
+            <source src="sanhe-intro-web.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </section>
+    <section class="about-chapter" id="founders" aria-label="关于我们：选择一位主理人">
+    <div class="about-us about-banner" id="about-us" aria-label="关于我们：三位主理人与四只猫">
+      <img src="assets/founders/about-us-transparent-v2.png" alt="然然坐在关字下，身旁依偎两只黑白猫；佳佳坐在于字上，与橘猫作伴；甜片靠着们字，怀抱灰白长毛猫。" width="1983" height="793" loading="lazy">
+    </div>
+    <nav class="founder-navigation" aria-label="选择主理人，展开过往履历">
+      <button class="founder-button" type="button" data-founder="tianpian" aria-controls="tianpian" aria-expanded="false" aria-describedby="founder-tip-tianpian">
+        <span class="founder-face founder-face--tianpian"><img src="assets/tianpian/room/room-v4.png" alt="" width="1920" height="1080" draggable="false"></span>
+        <span class="founder-badge" aria-hidden="true">点我</span>
+        <span class="founder-name">甜片</span>
+        <span class="founder-tooltip" id="founder-tip-tianpian" role="tooltip">点我可以看过往履历哦～</span>
+      </button>
+      <button class="founder-button" type="button" data-founder="ranran" aria-controls="ranran" aria-expanded="false" aria-describedby="founder-tip-ranran">
+        <span class="founder-face founder-face--ranran"><img src="assets/ranran/ranran_head_circle.png" alt="" width="512" height="512" draggable="false"></span>
+        <span class="founder-badge" aria-hidden="true">点我</span>
+        <span class="founder-name">然然</span>
+        <span class="founder-tooltip" id="founder-tip-ranran" role="tooltip">点我可以看过往履历哦～</span>
+      </button>
+      <button class="founder-button" type="button" data-founder="jiajia" aria-controls="jiajia" aria-expanded="false" aria-describedby="founder-tip-jiajia">
+        <span class="founder-face founder-face--jiajia"><img src="assets/founders/jiajia-avatar-source.png" alt="" width="1348" height="1167" draggable="false"></span>
+        <span class="founder-badge" aria-hidden="true">点我</span>
+        <span class="founder-name">佳佳</span>
+        <span class="founder-tooltip" id="founder-tip-jiajia" role="tooltip">点我可以看过往履历哦～</span>
+      </button>
+    </nav>
+    </section>
+    <section class="tianpian-section founder-panel" id="tianpian" aria-label="甜片的编导与拍摄空间" hidden>
+      <video id="tianpian-video" muted playsinline preload="metadata" poster="assets/tianpian/tianpian-opening-4456-poster.jpg" width="1920" height="1080" aria-label="灰白猫按响场记板后，甜片走向机位拍摄，闪光进入白色页面">
+        <source src="assets/tianpian/tianpian-opening-4456-cut-8_85.mp4" type="video/mp4">
+      </video>
+      <div class="tp-room" id="tp-room" aria-hidden="true">
+        <div class="tp-room-stage" id="tp-room-stage">
+          <img class="tp-room-image" src="assets/tianpian/room/room-v4.png" width="1920" height="1080" alt="甜片坐在工作桌后。桌上有分镜本、甜序集手串和相机，灰白猫卧在一侧；后方白板展示合作账号与成绩。">
+          <img class="tp-chunchun-exit" src="assets/tianpian/room/chunchun-exit-v2.png" width="1024" height="1536" alt="虫虫已经跃出画面下沿，只能看见条纹衣的后半身和尾巴。" draggable="false">
+          <div class="tp-room-glow" id="tp-room-glow" aria-hidden="true"></div>
+          <div class="tp-room-hotspots" id="tp-room-hotspots"></div>
+        </div>
+        <div class="tp-room-mobile-nav" id="tp-room-mobile-nav" aria-label="探索甜片的工作"></div>
+      </div>
+      <div class="tianpian-whiteout" aria-hidden="true"></div>
+    </section>
+    <div class="tianpian-flash" id="tianpian-flash" aria-hidden="true"><img src="assets/tianpian/tianpian-shutter-afterimage.jpg" alt=""></div>
+    <dialog class="tp-detail" id="tp-detail" aria-label="甜片个人经历"><div class="tp-detail-shell" id="tp-detail-shell"></div></dialog>
+    <section class="rr-section founder-panel" id="ranran" aria-label="然然的剪辑空间" hidden>
+      <div class="rr-sticky" id="rr-sticky">
+        <div class="rr-scene" id="rr-scene">
+          <video class="rr-scrub" id="rr-scrub" muted playsinline preload="metadata" poster="assets/ranran/ranran_firstframe.png" aria-label="然然从剪辑小屋走出来，向右走">
+            <source src="assets/ranran/ranran_v1_clean.mp4" type="video/mp4">
+          </video>
+          <video class="rr-transition" id="rr-transition" muted playsinline preload="metadata" poster="assets/ranran/kling_fullscreen_start.png" aria-label="跟随然然进入剪辑空间">
+            <source src="assets/ranran/ranran_transition.mp4" type="video/mp4">
+          </video>
+          <img class="rr-pov" id="rr-pov" src="assets/ranran/kling_fullscreen_end.png" alt="进入然然的剪辑空间" width="1920" height="1080">
+          <div class="rr-screen" id="rr-screen">
+            <div class="rr-boot" id="rr-boot">
+              <span>正在打开：然然的项目</span>
+              <div class="rr-boot-track"><i id="rr-boot-fill"></i></div>
+            </div>
+            <div class="rr-editor" id="rr-editor">
+              <aside class="rr-assets" id="rr-assets" aria-label="然然的剪辑工具">
+                <button class="rr-toolbox-trigger" id="rr-toolbox-trigger" type="button" aria-expanded="false" aria-controls="rr-tools" aria-label="打开然然的剪辑工具箱">
+                  <img src="assets/ranran/toolbox.png" alt="" width="280" height="240">
+                </button>
+                <div class="rr-tools" id="rr-tools" hidden></div>
+              </aside>
+              <div class="rr-preview" id="rr-preview">
+                <div class="rr-guide" id="rr-guide">
+                  <div class="rr-guide-art">
+                    <img src="assets/ranran/ranran-editing-scene-v1.png" alt="然然戴着耳机坐在电脑前专注剪辑，虫虫趴在提示牌旁。牌上写着：看样片点击，正在剪辑勿扰！" width="1672" height="941">
+                    <button class="rr-guide-open" id="rr-guide-open" type="button" aria-label="看样片：点击桌边提示牌"></button>
+                  </div>
+                </div>
+                <div class="rr-work" id="rr-work">
+                  <div class="rr-work-info"><small id="rr-segment-index">作品片段 01 / 11</small><strong id="rr-segment-label"></strong><span id="rr-segment-type"></span></div>
+                  <div class="rr-work-media">
+                    <img class="rr-work-poster" id="rr-work-poster" alt="">
+                    <video class="rr-full-video" id="rr-full-video" muted playsinline preload="metadata" aria-label="然然后期剪辑完整混剪合辑"></video>
+                    <button class="rr-sound" id="rr-sound" type="button" aria-label="切换声音">声音开启</button>
+                  </div>
+                  <time class="rr-work-time" id="rr-work-time"></time>
+                </div>
+                <div class="rr-credits" id="rr-credits">
+                  <div class="rr-credits-scroll" id="rr-credits-scroll">
+                    <strong>后期剪辑　然然</strong>
+                    <small>合作艺人</small>
+                    <p>戴军　寇振海　时康　陈添祥　侍慧　拉宏桑　宝哥</p>
+                    <small>合作品牌</small>
+                    <p>千问 AI 眼镜　蔚来　豆包　飞书　天猫</p>
+                  </div>
+                </div>
+                <div class="rr-export-display" id="rr-export-display">
+                  <strong><span id="rr-export-count">0</span>+</strong>
+                  <small>条成片</small>
+                  <div class="rr-export-success" id="rr-export-success">导出成功 · 已发送给佳佳</div>
+                  <button id="rr-play-full" type="button">播放完整成片 · 1:08</button>
+                </div>
+                <button class="rr-preview-play" id="rr-preview-play" type="button" aria-label="播放当前作品片段">▶</button>
+              </div>
+              <div class="rr-timeline" id="rr-timeline">
+                <div class="rr-timeline-top"><small>时间线</small><time id="rr-current-time">00:00:00:00</time></div>
+                <div class="rr-timeline-window" id="rr-timeline-window">
+                  <div class="rr-timeline-content" id="rr-timeline-content">
+                    <div class="rr-ruler" id="rr-ruler"></div>
+                    <div class="rr-video-track" id="rr-video-track"></div>
+                    <div class="rr-audio-track" id="rr-audio-track"></div>
+                  </div>
+                  <div class="rr-playhead" id="rr-playhead" role="slider" tabindex="0" aria-label="拖动然然头像，定位时间轴" aria-valuemin="0" aria-valuemax="68" aria-valuenow="0"><img src="assets/ranran/ranran_head_circle.png" alt="" width="36" height="36"></div>
+                </div>
+                <div class="rr-export-row" id="rr-export-row">
+                  <button class="rr-cat" id="rr-cat" type="button" aria-label="发现虫虫这只猫"><img src="assets/ranran/cat_cutout.png" alt="" width="48" height="48"></button>
+                  <div class="rr-export-track"><i id="rr-export-fill"></i></div>
+                  <span class="rr-plane" id="rr-plane" aria-hidden="true">➤</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="jiajia-section founder-panel" id="jiajia" aria-label="佳佳的直播操盘空间" hidden>
+      <video id="jiajia-video" muted playsinline preload="metadata" poster="assets/jiajia/jiajia-opening-4747-clean-poster.jpg" width="1280" height="720" aria-label="虫虫送来U盘，佳佳启动中控台，礼花落下后招呼访客靠近">
+        <source src="assets/jiajia/jiajia-opening-4747-clean-v1.mp4" type="video/mp4">
+      </video>
+      <div class="jj-workspace" id="jiajia-workspace" aria-hidden="true" inert></div>
+    </section>
+    <section class="projects-chapter" id="project-progress" aria-label="项目进程">
+    <div class="about-us project-progress" aria-label="项目进程标题">
+      <img src="assets/projects/project-progress-transparent-v2.png" alt="项目进程：佳佳站在左侧看平板，甜片与右侧的然然交流分镜，四只猫穿插在木字之间。" width="1983" height="793" loading="lazy">
+    </div>
+    <div id="projects" aria-label="项目进度" style="overflow:hidden">
+      <div id="project-gallery-root"></div>
+    </div>
+    </section>
+    <section class="about-us cooperation-banner" id="cooperation" aria-label="合作方式">
+      <img src="assets/cooperation/cooperation-transparent-v2.png" alt="合作方式：甜片靠在合字左侧，然然坐在中间递出方案，佳佳从右侧接过；四只猫分布在文字上下。" width="1983" height="793" loading="lazy">
+      <div class="co-workbench">
+        <div class="co-approach">
+          <header class="co-intro"><h2>下一件事，<br>一起做成。</h2><p>一个作品，一个项目，或一段长期合作。</p></header>
+          <fieldset class="co-modes"><legend class="co-sr-only">选择合作方式</legend>
+            <label class="co-mode"><input type="radio" name="co-mode" value="单项制作" checked><span class="co-mode-body"><strong>单项制作</strong><span>一条片子、一次拍摄，或一个明确的需求。</span></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5"/></svg></label>
+            <label class="co-mode"><input type="radio" name="co-mode" value="项目协作"><span class="co-mode-body"><strong>项目协作</strong><span>把策划、拍摄、剪辑、运营按需组合。</span></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5"/></svg></label>
+            <label class="co-mode"><input type="radio" name="co-mode" value="长期共创"><span class="co-mode-body"><strong>长期共创</strong><span>持续做内容、经营账号，也一起迭代产品。</span></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5"/></svg></label>
+          </fieldset>
+          <div class="co-team" aria-label="按需求组合三位主理人的专业分工">
+            <div class="co-person"><span class="co-face co-face--tp"><svg viewBox="790 335 300 300" width="38" height="38" aria-hidden="true"><image href="assets/tianpian/room/room-v4.png" width="1920" height="1080"/></svg></span><span><strong>甜片</strong><small>策划 · 拍摄</small></span></div>
+            <div class="co-person"><span class="co-face co-face--rr"><img src="assets/ranran/ranran_head_circle.png" alt="" loading="lazy"></span><span><strong>然然</strong><small>剪辑 · 后期</small></span></div>
+            <div class="co-person"><span class="co-face co-face--jj"><img src="assets/founders/jiajia-avatar-source.png" alt="" loading="lazy"></span><span><strong>佳佳</strong><small>直播 · 投放 · AI</small></span></div>
+          </div>
+        </div>
+        <form class="co-brief" id="co-brief">
+          <div class="co-paper-head"><h3>合作便签</h3><span id="co-selected-mode">单项制作</span></div>
+          <fieldset class="co-services"><legend>需要哪些支持</legend><div class="co-services-grid">
+            <label><input type="checkbox" name="service" value="策划拍摄"><span>策划拍摄</span></label>
+            <label><input type="checkbox" name="service" value="后期剪辑"><span>后期剪辑</span></label>
+            <label><input type="checkbox" name="service" value="直播运营与投放"><span>直播运营与投放</span></label>
+            <label><input type="checkbox" name="service" value="AI产品开发"><span>AI 产品开发</span></label>
+          </div></fieldset>
+          <label class="co-field"><span>想一起做什么</span><textarea name="description" id="co-description" rows="2" maxlength="800" required placeholder="说说目标、现有素材和希望交付的内容。"></textarea></label>
+          <div class="co-field-pair"><label class="co-field"><span>期望时间 <small>选填</small></span><input name="timeline" maxlength="80" placeholder="例如：本月底，可沟通"></label><label class="co-field"><span>预算范围 <small>选填</small></span><input name="budget" maxlength="80" placeholder="按你的实际安排填写"></label></div>
+          <div class="co-benefit" id="co-benefit" hidden><span aria-hidden="true">✦</span><span>我的合作福利<strong id="co-benefit-label"></strong></span></div>
+          <div class="co-actions"><button type="submit" class="co-copy">复制合作需求<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 8h12v12H8zM4 16V4h12" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button><button type="button" class="co-download" id="co-download" aria-label="将合作需求保存为文本" title="保存为文本"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+          <p class="co-helper" id="co-status" aria-live="polite">先整理成文字，复制后发给你的对接人。</p>
+          <details class="co-preview" id="co-preview"><summary>查看需求便签</summary><textarea id="co-brief-preview" readonly rows="9" aria-label="可复制的合作需求便签"></textarea></details>
+        </form>
+      </div>
+      <ol class="co-process" aria-label="合作流程"><li>聊清目标</li><li>确认范围、报价与排期</li><li>分工执行与验收</li></ol>
+    </section>
+  </main>
+  <script>
+
+    const hero=document.querySelector('.hero');
+    const video=document.getElementById('intro');
+    const replayButton=document.getElementById('replay');
+    const titleAt=7.30; // 保留完整 8.041667 秒、193 帧原片。
+    function sync(){if(video.currentTime>=titleAt)hero.classList.add('is-welcome');}
+    function finish(staticImage=false){
+      hero.classList.add('is-welcome','is-finished');
+      if(staticImage)hero.classList.add('is-static');
+    }
+    async function play(){
+      try{await video.play();}
+      catch(error){if(error.name!=='AbortError')finish(true);}
+    }
+    video.addEventListener('timeupdate',sync);
+    video.addEventListener('ended',()=>finish(false));
+    video.addEventListener('error',()=>finish(true));
+    if('requestVideoFrameCallback' in video){
+      const tick=()=>{sync();video.requestVideoFrameCallback(tick)};
+      video.requestVideoFrameCallback(tick);
+    }
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches)finish(true);
+    else play();
+    replayButton.addEventListener('click',async()=>{
+      video.pause();
+      try{
+        video.currentTime=0;
+        hero.classList.remove('is-welcome','is-finished','is-static','is-leaving');
+        await video.play();
+      }catch(error){finish(true);}
+    });
+    addEventListener('scroll',()=>hero.classList.toggle('is-leaving',scrollY>innerHeight*.18),{passive:true});
+
+    const tianpianSection=document.getElementById('tianpian');
+    const tianpianVideo=document.getElementById('tianpian-video');
+    const tianpianFlash=document.getElementById('tianpian-flash');
+    const tianpianCut=8.85;
+    let tianpianTimers=[];
+    let tianpianFrame=0;
+    function resetTianpian(){
+      tianpianTimers.forEach(clearTimeout);
+      tianpianTimers=[];
+      cancelAnimationFrame(tianpianFrame);
+      tianpianVideo.pause();
+      tianpianVideo.currentTime=0;
+      tianpianSection.classList.remove('is-white','is-room');
+      document.getElementById('tp-room').setAttribute('aria-hidden','true');
+      tianpianFlash.classList.remove('is-active','is-developing','is-release');
+    }
+    tianpianSection.addEventListener('founder-close', resetTianpian);
+    function triggerTianpianFlash(){
+      if(tianpianSection.classList.contains('is-white'))return;
+      cancelAnimationFrame(tianpianFrame);
+      tianpianVideo.pause();
+      tianpianSection.classList.add('is-white');
+      tianpianTimers.push(setTimeout(()=>{
+        tianpianSection.classList.add('is-room');
+        document.getElementById('tp-room').setAttribute('aria-hidden','false');
+      },220));
+      tianpianFlash.classList.remove('is-developing','is-release');
+      tianpianFlash.classList.add('is-active');
+      tianpianTimers.push(setTimeout(()=>tianpianFlash.classList.add('is-developing'),90));
+      tianpianTimers.push(setTimeout(()=>{
+        tianpianFlash.classList.remove('is-active');
+        tianpianFlash.classList.add('is-release');
+      },1280));
+      tianpianTimers.push(setTimeout(()=>tianpianFlash.classList.remove('is-developing','is-release'),1700));
+    }
+    function syncTianpianWhite(){if(tianpianVideo.currentTime>=tianpianCut)triggerTianpianFlash()}
+    function watchTianpian(){
+      syncTianpianWhite();
+      if(!tianpianVideo.paused&&!tianpianSection.classList.contains('is-white'))
+        tianpianFrame=requestAnimationFrame(watchTianpian);
+    }
+    tianpianVideo.addEventListener('play',()=>{cancelAnimationFrame(tianpianFrame);tianpianFrame=requestAnimationFrame(watchTianpian)});
+    tianpianVideo.addEventListener('timeupdate',syncTianpianWhite);
+    tianpianVideo.addEventListener('ended',triggerTianpianFlash);
+    if('requestVideoFrameCallback' in tianpianVideo){
+      const tickTianpian=()=>{
+        syncTianpianWhite();
+        tianpianVideo.requestVideoFrameCallback(tickTianpian);
+      };
+      tianpianVideo.requestVideoFrameCallback(tickTianpian);
+    }
+    if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      let tianpianStarted=false;
+      tianpianSection.addEventListener('founder-close',()=>{ tianpianStarted=false; });
+      const tianpianObserver=new IntersectionObserver(([entry])=>{
+        if(entry.intersectionRatio>=.25 && !tianpianStarted){
+          tianpianStarted=true;
+          resetTianpian();
+          tianpianVideo.play().catch(()=>{
+            tianpianSection.classList.add('is-white','is-room');
+            document.getElementById('tp-room').setAttribute('aria-hidden','false');
+          });
+        }else if(!entry.isIntersecting){
+          resetTianpian();
+          tianpianStarted=false;
+        }
+      },{threshold:[0,.25]});
+      tianpianObserver.observe(tianpianSection);
+    }
+
+  </script>
+  <script type="module" src="ranran-editor.js?v=20261101-full-reel"></script>
+  <script src="tianpian-room.js?v=20261030g"></script>
+  <script src="jiajia-video.js?v=20261101-gesture"></script>
+  <script type="module" src="jiajia-panel.js?v=20261101-proof"></script>
+  <script type="module" src="project-carousel.js?v=20261101-bounce"></script>
+  <script src="founder-navigation.js?v=20261101-cooperation"></script>
+  <script src="easter-egg.js?v=20261101-contact-shadow" defer></script>
+  <script src="cooperation.js?v=20261101-brief-final" defer></script>
+</body>
+</html>
