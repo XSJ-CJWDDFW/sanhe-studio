@@ -1,0 +1,4 @@
+[build]
+  publish = "site"
+
+# This is an already-built static site. No framework build or SPA rewrite.
